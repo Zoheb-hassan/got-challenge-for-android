@@ -22,7 +22,7 @@ import es.npatarino.android.gotchallenge.utility.Constants;
 /**
  * Created by ZohebS on 20-05-2016.
  */
-class GoTAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class GoTAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final List<GoTCharacter> goTCharacterList;
     private Activity activity;

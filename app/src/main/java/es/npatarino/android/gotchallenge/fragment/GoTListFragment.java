@@ -1,29 +1,21 @@
 package es.npatarino.android.gotchallenge.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.lang.reflect.Type;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import es.npatarino.android.gotchallenge.model.GoTCharacter;
 import es.npatarino.android.gotchallenge.R;
+import es.npatarino.android.gotchallenge.adapter.GoTAdapter;
+import es.npatarino.android.gotchallenge.model.GoTCharacter;
 
 /**
  * Created by ZohebS on 20-05-2016.
@@ -31,22 +23,34 @@ import es.npatarino.android.gotchallenge.R;
 public class GoTListFragment extends Fragment {
 
     private static final String TAG = "GoTListFragment";
+    private List<GoTCharacter> goTCharacterList;
+    RecyclerView recyclerView;
+    GoTAdapter gotAdapter;
 
     public GoTListFragment() {
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        goTCharacterList = new ArrayList<>();
+        gotAdapter = new GoTAdapter(getActivity(), goTCharacterList);
+
     }
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_list, container, false);
         final ContentLoadingProgressBar pb = (ContentLoadingProgressBar) rootView.findViewById(R.id.pb);
-        RecyclerView rv = (RecyclerView) rootView.findViewById(R.id.rv);
+         recyclerView = (RecyclerView) rootView.findViewById(R.id.rv);
 
-        final GoTAdapter adp = new GoTAdapter(getActivity());
-        rv.setLayoutManager(new LinearLayoutManager(getActivity()));
-        rv.setHasFixedSize(true);
-        rv.setAdapter(adp);
 
-        new Thread(new Runnable() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(gotAdapter);
+
+        /*new Thread(new Runnable() {
 
             @Override
             public void run() {
@@ -82,7 +86,7 @@ public class GoTListFragment extends Fragment {
 
 
             }
-        }).start();
+        }).start();*/
         return rootView;
     }
 }
